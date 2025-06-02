@@ -1,0 +1,110 @@
+/* Hero (pantalla completa con imagen de fondo y superposición oscura) */
+.hero {
+background-image: url('./img/fondo-pizza.jpg'); /* Cambia a la ruta real */
+/* Si no funciona, prueba con la ruta correcta desde el archivo CSS: */
+background-image: url('../../assets/img/fondo-pizza.jpg');
+background-size: cover;
+background-position: center;
+height: 100vh; /* Pantalla completa */
+position: relative;
+}
+
+.hero-overlay {
+  background-color: rgba(0, 0, 0, 0.6); /* capa oscura */
+  padding: 20px;
+}
+/* Contenedor de tarjetas */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 1rem;
+}
+
+/* Tarjeta individual */
+.card {
+  width: 350px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+/* Imagen de la pizza */
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Nombre de la pizza */
+.card h3 {
+  font-size: 1.2rem;
+  margin: 0.8rem 1rem 0.3rem;
+  color: #222;
+}
+
+/* Ingredientes */
+.card p {
+  margin: 0.2rem 1rem;
+  font-size: 0.88rem;
+  color: #555;
+}
+
+.card p strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #666;
+}
+
+.card p:first-of-type {
+  margin-top: 0.3rem;
+}
+
+/* Precio */
+.card h4 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 1rem 0 0.5rem;
+  color: #000;
+}
+
+/* Botones */
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.6rem 1rem 1rem;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Ver Más */
+button:first-child {
+  background-color: #f3f3f3;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+/* Añadir */
+button:last-child {
+  background-color: #111;
+  color: white;
+  border: 1px solid #000;
+}
