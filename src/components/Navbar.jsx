@@ -13,13 +13,13 @@ const Navbar = () => {
 
           {token ? (
             <>
-              <button className="btn btn-sm btn-outline-warning">🔓 Profile</button>
+              <button className="btn btn-sm btn-outline-warning">🔓 Perfil</button>
               <button className="btn btn-sm btn-outline-warning">🔒 Logout</button>
             </>
           ) : (
             <>
               <button className="btn btn-sm btn-outline-warning">🔐 Login</button>
-              <button className="btn btn-sm btn-outline-warning">📝 Register</button>
+              <button src="/register.jsx" className="btn btn-sm btn-outline-warning">📝 Registro</button>
             </>
           )}
         </div>
