@@ -4,16 +4,18 @@ import Footer from './components/Footer';
 import CardPizza from './components/CardPizza';
 import Register from './components/Register';
 import Login from './components/Login';
+import Cart from './components/Cart';
 function App() {
 
   return (
     <>
      <Navbar />
-   {/*  <Home />
-     <CardPizza />*/}
-     <Register />
-     <p></p>
+    {/* <Home />
+     
+       <Register />
      <Login />
+     */}
+     <Cart />
      <Footer />
      
     </>
