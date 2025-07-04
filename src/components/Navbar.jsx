@@ -1,34 +1,46 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Navbar, Container, Nav } from "react-bootstrap";
 
-const Navbar = () => {
-  const token = false; // Cambiar a true para probar el otro estado
+const CustomNavbar = () => {
+  const token = false; // Cambiar a true para simular login
   const total = 25000;
 
   return (
-    <nav className="navbar navbar-dark bg-dark border-bottom border-warning px-3">
-      <div className="container-fluid d-flex justify-content-between align-items-center">
-        <div className="d-flex align-items-center gap-2">
-          <span className="text-white fw-bold">Pizzería Mamma Mia!</span>
-          <button className="btn btn-sm btn-outline-warning">🍕 Home</button>
+    <Navbar bg="dark" variant="dark" expand="lg" className="border-bottom border-warning px-3">
+      <Container fluid>
+        <Navbar.Brand as={Link} to="/" className="fw-bold text-white">
+          Pizzería Mamma Mia!
+        </Navbar.Brand>
+
+        <Nav className="d-flex align-items-center gap-2">
+          <Link to="/" className="btn btn-sm btn-outline-warning">🍕 Home</Link>
 
           {token ? (
             <>
-              <button className="btn btn-sm btn-outline-warning">🔓 Perfil</button>
-              <button className="btn btn-sm btn-outline-warning">🔒 Logout</button>
+              <Link to="/profile" className="btn btn-sm btn-outline-warning">🔓 Perfil</Link>
+              <Link to="/logout" className="btn btn-sm btn-outline-warning">🔒 Logout</Link>
             </>
           ) : (
             <>
-              <button className="btn btn-sm btn-outline-warning">🔐 Login</button>
-              <button src="/register.jsx" className="btn btn-sm btn-outline-warning">📝 Registro</button>
+              <Link to="/login" className="btn btn-sm btn-outline-warning">🔐 Login</Link>
+              <Link to="/register" className="btn btn-sm btn-outline-warning">📝 Registro</Link>
             </>
           )}
-        </div>
-        <button className="btn btn-sm btn-outline-info">
-          🛒 Total: {total.toLocaleString('es-CL')}
-        </button>
-      </div>
-    </nav>
+
+          <Link to="/pizza/p001" className="btn btn-sm btn-outline-warning">🍕 Pizza</Link>
+          <Link to="/cart" className="btn btn-sm btn-outline-warning">🛒 Carrito</Link>
+          <Link to="/notfound" className="btn btn-sm btn-outline-warning">❌ NotFound</Link>
+        </Nav>
+
+        <Nav>
+          <Link to="/cart" className="btn btn-sm btn-outline-info">
+            🛒 Total: ${total.toLocaleString("es-CL")}
+          </Link>
+        </Nav>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default CustomNavbar;
