@@ -1,10 +1,13 @@
 import CardPizza from "./CardPizza";
 import Pizza from "./Pizza";
-import React, { useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import { CartContext } from "../context/CartContext";
 const Home = () => {
   const [pizzas, setPizza] = useState([]);
+  const { addToCart } = useContext(CartContext);
 
+
+  
   useEffect(() => {
     const fetchPizza = async () => {
       try {
@@ -60,7 +63,15 @@ const Home = () => {
                         </li>
                       ))}
                     </ul>
-                    <button className="btn btn-danger w-100">
+                    <button className="btn btn-danger w-100"
+                    onClick={() => 
+                      addToCart({
+                      id: pizza.id,
+                      name: pizza.name,
+                      price: pizza.price,
+                      img: pizza.img,
+                    })}
+                    >
                       Añadir al carrito
                     </button>
                   </div>

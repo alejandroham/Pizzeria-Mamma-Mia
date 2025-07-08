@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
+import { CartContext } from "../context/CartContext"; // llama al CartContext
+
 
 const CustomNavbar = () => {
   const token = false; // Cambiar a true para simular login
-  const total = 25000;
+  const {total} = React.useContext(CartContext); // Obtiene el total del carrito desde el contexto
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="border-bottom border-warning px-3">

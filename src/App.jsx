@@ -14,6 +14,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart"; 
 import Profile from "./pages/Profile";
+import CartProvider from "./context/CartContext";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
       <Register />
       <Login />
       <Cart />*/}
-  
+      <CartProvider>
       <div>
         <Navigation />
         <Routes>
@@ -37,6 +38,7 @@ function App() {
         </Routes>
       </div>
           <Footer />
+          </CartProvider>
     </>
   );
 }
