@@ -1,9 +1,19 @@
 // /components/Cart.jsx
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+<<<<<<< HEAD
 
 const Cart = () => {
   const { cartItems, increment, decrement,borrarPizza, total } = useContext(CartContext);
+=======
+import { UserContext } from "../context/UserContext";
+
+
+
+const Cart = () => {
+  const { cartItems, increment, decrement,borrarPizza, total } = useContext(CartContext);
+    const { user } = useContext(UserContext);
+>>>>>>> master
 
   // Ordenar los items por nombre
 
@@ -60,7 +70,14 @@ const Cart = () => {
         <h5>
           Total: <strong>${total.toLocaleString()}</strong>
         </h5>
+<<<<<<< HEAD
         <button className="btn btn-dark mt-4 mb-4">Pagar</button>
+=======
+        <button className="btn btn-dark mt-4 mb-4" disabled={!user.isAuthenticated} >Pagar</button>
+              {!user.isAuthenticated && (
+        <p style={{ color: "red" }}>Debes iniciar sesión para pagar.</p>
+      )}
+>>>>>>> master
       </div>
     </div>
   );
