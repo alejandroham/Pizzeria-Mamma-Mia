@@ -1,16 +1,6 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 
 const Register = () => {
-=======
-import React, { useState, useContext } from "react";
-import { UserContext } from "../context/UserContext.jsx";
-import { Navigate } from "react-router-dom";
-import fondo from "../assets/img/comparte.jpg";
-
-const Register = () => {
-  const { user } = useContext(UserContext);
->>>>>>> master
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,21 +12,10 @@ const Register = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [matchError, setMatchError] = useState(false);
 
-<<<<<<< HEAD
   const validarInput = (e) => {
     e.preventDefault();
 
     // Resetear errores
-=======
-  // Redirige si ya está autenticado
-  if (user.isAuthenticated === true) {
-    return <Navigate to="/" replace />;
-  }
-
-  const validarInput = (e) => {
-    e.preventDefault();
-
->>>>>>> master
     setNombreError(false);
     setEmailError(false);
     setPasswordError(false);
@@ -49,15 +28,10 @@ const Register = () => {
       setNombreError(true);
       hasError = true;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     if (!email) {
       setEmailError(true);
       hasError = true;
     }
-<<<<<<< HEAD
 
     if (!password) {
       setPasswordError(true);
@@ -67,12 +41,6 @@ const Register = () => {
       hasError = true;
     }
 
-=======
-    if (!password || password.length < 6) {
-      setPasswordError(true);
-      hasError = true;
-    }
->>>>>>> master
     if (!confirmPassword) {
       setConfirmPasswordError(true);
       hasError = true;
@@ -83,39 +51,17 @@ const Register = () => {
 
     if (!hasError) {
       alert("Formulario enviado con éxito");
-<<<<<<< HEAD
       // Aquí podrías hacer algo más, como enviar los datos a una API
-=======
->>>>>>> master
     }
   };
 
   return (
-<<<<<<< HEAD
     <form onSubmit={validarInput}>
   <div className="container mt-5">
     <h3 className="text-center mb-4">Formulario de Registro</h3>
     
     <div className="row justify-content-center">
       <div className="col-md-6"> {/* Aquí controlas el tamaño */}
-=======
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{
-        backgroundImage: `url(${fondo})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        padding: "2rem",
-      }}
-    >
-      <form
-        onSubmit={validarInput}
-        style={{ backgroundColor: "rgba(255,255,255,0.9)", padding: "2rem", borderRadius: "10px", maxWidth: "500px", width: "100%" }}
-      >
-        <h3 className="text-center mb-4">Formulario de Registro</h3>
-
->>>>>>> master
         <div className="mb-3">
           <input
             type="text"
@@ -166,17 +112,12 @@ const Register = () => {
             Enviar
           </button>
         </div>
-<<<<<<< HEAD
         <div class="span"></div>
       </div>
     </div>
   </div>
 </form>
 
-=======
-      </form>
-    </div>
->>>>>>> master
   );
 };
 
