@@ -1,123 +1,123 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [nombre, setNombre] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const { register } = useContext(UserContext);
+  const navigate = useNavigate(); // Para redirigir después del registro
+  const [form, setForm] = useState({
+    nombre: "",
+    fechaNacimiento: "",
+    email: "",
+    password: ""
+  });
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const [nombreError, setNombreError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-  const [matchError, setMatchError] = useState(false);
-
-  const validarInput = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Resetear errores
-    setNombreError(false);
-    setEmailError(false);
-    setPasswordError(false);
-    setConfirmPasswordError(false);
-    setMatchError(false);
-
-    let hasError = false;
-
-    if (!nombre) {
-      setNombreError(true);
-      hasError = true;
-    }
-    if (!email) {
-      setEmailError(true);
-      hasError = true;
-    }
-
-    if (!password) {
-      setPasswordError(true);
-      hasError = true;
-    } else if (password.length < 6) {
-      setPasswordError(true);
-      hasError = true;
-    }
-
-    if (!confirmPassword) {
-      setConfirmPasswordError(true);
-      hasError = true;
-    } else if (password !== confirmPassword) {
-      setMatchError(true);
-      hasError = true;
-    }
-
-    if (!hasError) {
-      alert("Formulario enviado con éxito");
-      // Aquí podrías hacer algo más, como enviar los datos a una API
+    setError(null);
+    setLoading(true);
+    try {
+      await register(form); // Llama al contexto
+      alert("✅ Registro exitoso");
+      navigate("/profile"); // Redirige automáticamente a Profile
+    } catch (err) {
+      console.error("Register error:", err);
+      const msg = err?.message || "Error al registrar usuario";
+      setError(`❌ ${msg}`);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
   return (
-    <form onSubmit={validarInput}>
-  <div className="container mt-5">
-    <h3 className="text-center mb-4">Formulario de Registro</h3>
-    
-    <div className="row justify-content-center">
-      <div className="col-md-6"> {/* Aquí controlas el tamaño */}
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nombre Apellido"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-          />
-          {nombreError && <p className="error">Debes ingresar tu Nombre</p>}
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-8 col-lg-6">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h2 className="card-title text-center mb-4">Crear Cuenta</h2>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="nombre" className="form-label">Nombre completo</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="nombre"
+                    name="nombre"
+                    placeholder="Ingresa tu nombre"
+                    value={form.nombre}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="fechaNacimiento" className="form-label">Fecha de nacimiento</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="fechaNacimiento"
+                    name="fechaNacimiento"
+                    value={form.fechaNacimiento}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">Correo electrónico</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="ejemplo@correo.com"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="Crea una contraseña segura"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="d-grid gap-2">
+                  <button type="submit" className="btn btn-success" disabled={loading}>
+                    {loading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="ms-2">Registrando...</span>
+                      </>
+                    ) : (
+                      "Registrar"
+                    )}
+                  </button>
+                </div>
+              </form>
+              {error && (
+                <div className="alert alert-danger mt-3" role="alert">
+                  {error}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-
-        <div className="mb-3">
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {emailError && <p className="error">Debes ingresar tu email</p>}
-        </div>
-
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {passwordError && <p className="error">Contraseña obligatoria (mínimo 6 caracteres)</p>}
-        </div>
-
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Confirmar contraseña"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          {confirmPasswordError && <p className="error">Debes confirmar tu contraseña</p>}
-          {matchError && <p className="error">Las contraseñas no coinciden</p>}
-        </div>
-
-        <div className="text-end mt-2 mb-3">
-          <button className="btn btn-dark" type="submit">
-            Enviar
-          </button>
-        </div>
-        <div class="span"></div>
       </div>
     </div>
-  </div>
-</form>
-
   );
 };
 

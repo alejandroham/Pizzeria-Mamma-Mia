@@ -1,12 +1,6 @@
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
-import Pizza from "./pages/Pizza";
-//import CardPizza from './components/CardPizza';
-//import Login from './components/Login';
-//import Cart from './components/Cart';
-
-//importa Navigation
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import NotFound from "./pages/NotFound";
@@ -15,31 +9,24 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart"; 
 import Profile from "./pages/Profile";
 import CartProvider from "./context/CartContext";
-
+import { UserProvider } from "./context/UserContext";  // 👈 importa el UserProvider
 
 function App() {
   return (
-    <>
-      {/* <Pizza />
-     
-      <Register />
-      <Login />
-      <Cart />*/}
+    <UserProvider>  {/* 👈 envolver toda la app con UserProvider */}
       <CartProvider>
-      <div>
         <Navigation />
         <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/Login" element={<Login/>} />
-        <Route path="/Register" element={<Register/>} />
-        <Route path="/Profile" element={<Profile/>}/>
-        <Route path="*" element={<NotFound />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="*" element={<NotFound />} />
         </Routes>
-      </div>
-          <Footer />
-          </CartProvider>
-    </>
+        <Footer />
+      </CartProvider>
+    </UserProvider>
   );
 }
 

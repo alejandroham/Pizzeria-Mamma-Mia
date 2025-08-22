@@ -1,16 +1,17 @@
-
 import { createRoot } from 'react-dom/client'
-import './index.css' //  lo quite por que me dejaba usar la mitad del ancho de la pantalla
+import './index.css' 
 import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.css';
-import 'react-bootstrap'
-import {BrowserRouter} from 'react-router-dom';
-
+import { BrowserRouter } from 'react-router-dom';
+import { UserProvider } from './context/UserContext';
+import { CartProvider } from './context/CartContext';
 
 createRoot(document.getElementById('root')).render(
-
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>
-
+  <BrowserRouter>
+    <UserProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
+    </UserProvider>
+  </BrowserRouter>
 );

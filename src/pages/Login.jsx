@@ -1,86 +1,86 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate(); // Para redirigir después del login
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [matchError, setMatchError] = useState(false);
-
-  const validarInput = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Resetear errores
-    setEmailError(false);
-    setPasswordError(false);
-    setMatchError(false);
-
-    let hasError = false;
-
-
-
-    if (!email) {
-      setEmailError(true);
-      hasError = true;
-    }
-
-    if (!password) {
-      setPasswordError(true);
-      hasError = true;
-    } else if (password.length < 6) {
-      setPasswordError(true);
-      hasError = true;
-    }
-
-    if (!hasError) {
-      alert("Formulario enviado con éxito");
-      // Aquí podrías hacer algo más, como enviar los datos a una API
+    setLoading(true);
+    setError(null);
+    try {
+      await login(form); // Llama al contexto
+      alert("✅ Inicio de sesión exitoso");
+      navigate("/profile"); // Redirige automáticamente a Profile
+    } catch (err) {
+      console.error("Login error:", err);
+      const msg = err?.message || "Error al iniciar sesión";
+      setError(`❌ ${msg}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={validarInput}>
-  <div className="container mt-5">
-    <h3 className="text mb-4">Login</h3>
-    
-    <div className="row justify-content-center">
-      <div className="col-md-6"> 
-    
-        <div className="mb-3">
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {emailError && <p className="error">Debes ingresar tu email</p>}
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-4">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h2 className="card-title text-center mb-4">Iniciar Sesión</h2>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">Correo electrónico</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    placeholder="ejemplo@correo.com"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="********"
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="d-grid gap-2">
+                  <button type="submit" className="btn btn-primary" disabled={loading}>
+                    {loading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="ms-2">Ingresando...</span>
+                      </>
+                    ) : (
+                      "Login"
+                    )}
+                  </button>
+                </div>
+              </form>
+              {error && (
+                <div className="alert alert-danger mt-3" role="alert">
+                  {error}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {passwordError && <p className="error">Contraseña obligatoria (mínimo 6 caracteres)</p>}
-          {matchError && <p className="error">La contraseña no coincide, Reintenta</p>}
-        </div>
-
-        <div className="text-end mt-2 mb-3">
-          <button className="btn btn-dark" type="submit">
-            Enviar
-          </button>
-        </div>
-        <div class="span"></div>
       </div>
     </div>
-  </div>
-</form>
-
   );
 };
 

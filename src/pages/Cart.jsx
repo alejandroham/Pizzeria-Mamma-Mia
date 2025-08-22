@@ -1,15 +1,40 @@
-// /components/Cart.jsx
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 
 const Cart = () => {
-  const { cartItems, increment, decrement,borrarPizza, total } = useContext(CartContext);
+  const { cartItems, increment, decrement, borrarPizza, total, clearCart } = useContext(CartContext);
+  const [success, setSuccess] = useState(false);
 
-  // Ordenar los items por nombre
+  const handlePayment = () => {
+    if (cartItems.length === 0) return;
+
+    // Vacía el carrito
+    clearCart();
+
+    // Mostrar mensaje de éxito
+    setSuccess(true);
+  };
+
+  // Refresca la página 2 segundos después de comprar
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
 
   return (
     <div className="container mt-4">
       <h5>Detalles del pedido:</h5>
+
+      {cartItems.length === 0 && !success && (
+        <div className="alert alert-info mt-3">
+          Tu carrito está vacío
+        </div>
+      )}
 
       <div className="list-group">
         {cartItems.map((pizza) => (
@@ -60,7 +85,19 @@ const Cart = () => {
         <h5>
           Total: <strong>${total.toLocaleString()}</strong>
         </h5>
-        <button className="btn btn-dark mt-4 mb-4">Pagar</button>
+        <button
+          className="btn btn-dark mt-4 mb-4"
+          onClick={handlePayment}
+          disabled={cartItems.length === 0}
+        >
+          Pagar
+        </button>
+
+        {success && (
+          <div className="alert alert-success mt-3" role="alert">
+            ✅ ¡Compra realizada con éxito! Gracias por tu compra 🎉
+          </div>
+        )}
       </div>
     </div>
   );

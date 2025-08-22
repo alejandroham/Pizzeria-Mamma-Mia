@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { CartContext } from "../context/CartContext"; // llama al CartContext
-
+import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext"; 
 
 const CustomNavbar = () => {
-  const token = false; // Cambiar a true para simular login
-  const {total} = React.useContext(CartContext); // Obtiene el total del carrito desde el contexto
+  const { total } = useContext(CartContext); 
+  const { user, logout } = useContext(UserContext); 
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="border-bottom border-warning px-3">
@@ -17,11 +17,18 @@ const CustomNavbar = () => {
 
         <Nav className="d-flex align-items-center gap-2">
           <Link to="/" className="btn btn-sm btn-outline-warning">🍕 Home</Link>
-
-          {token ? (
+          <Link to="/pizza/p001" className="btn btn-sm btn-outline-warning">🍕 Pizza</Link>
+          <Link to="/cart" className="btn btn-sm btn-outline-warning">🛒 Carrito</Link>
+          <Link to="/notfound" className="btn btn-sm btn-outline-warning">❌ NotFound</Link>
+          {user.isAuthenticated ? (
             <>
               <Link to="/profile" className="btn btn-sm btn-outline-warning">🔓 Perfil</Link>
-              <Link to="/logout" className="btn btn-sm btn-outline-warning">🔒 Logout</Link>
+              <button
+                className="btn btn-sm btn-outline-warning"
+                onClick={logout} // 👈 Llama logout directamente
+              >
+                🔒 Logout
+              </button>
             </>
           ) : (
             <>
@@ -29,10 +36,6 @@ const CustomNavbar = () => {
               <Link to="/register" className="btn btn-sm btn-outline-warning">📝 Registro</Link>
             </>
           )}
-
-          <Link to="/pizza/p001" className="btn btn-sm btn-outline-warning">🍕 Pizza</Link>
-          <Link to="/cart" className="btn btn-sm btn-outline-warning">🛒 Carrito</Link>
-          <Link to="/notfound" className="btn btn-sm btn-outline-warning">❌ NotFound</Link>
         </Nav>
 
         <Nav>
